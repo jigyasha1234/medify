@@ -1,0 +1,14 @@
+.search-form {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end
+}
+
+.field {
+    display: flex;
+    flex-direction: column
+}
+
+.actions button {
+    padding: 8px 12px
+}
