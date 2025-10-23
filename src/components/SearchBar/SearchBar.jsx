@@ -15,11 +15,9 @@ import { BookingsContext, FoundHospitalsContext } from '../../contexts/AllContex
 
 //apis
 const api = "https://meddata-backend.onrender.com";
-const allSates = ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","DC","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","PR","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","VI","Wyoming","AS","GU","MP"]
-
 const SearchBar = props => {
     //const
-    const { customClass, atBookingsPage, atHomePage } = props;
+    const { customClass, atBookingsPage, atHomePage, onSearchSubmit } = props;
     //contexts
     const [bookings, setBookings] = useContext(BookingsContext)
     const [foundHospitals, setFoundHospitals] = useContext(FoundHospitalsContext)
@@ -27,6 +25,7 @@ const SearchBar = props => {
     const [stateName, setStateName] = useState("");
     const [cityName, setCityName] = useState("");
     const [hospitalName, setHospitalName] = useState("");
+    const [allStates, setAllStates] = useState([]);
     const [filteredStates, setFilteredStates] = useState([]);
     const [allCities, setAllCities] = useState([]);
     const [filteredCities, setFilteredCities] = useState([]);
@@ -38,6 +37,25 @@ const SearchBar = props => {
     const cityName_onChange = useRef(false);
     const fetchingCities = useRef(false);
     //side effects
+    useEffect(() => {
+        // Fetch states on component mount
+        getLocationData("states");
+        
+        // Add click outside handler to close dropdowns
+        const handleClickOutside = (event) => {
+            if (!event.target.closest('.inputWrapper')) {
+                setFilteredStates([]);
+                setFilteredCities([]);
+                setFilteredHospitals([]);
+            }
+        };
+        
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [])
+
     useEffect(()=> {
         if(stateName_onChange.current) filterStatesFunc();
     }, [stateName])
@@ -54,13 +72,36 @@ const SearchBar = props => {
     const handleSubmit = async event => {
         event.preventDefault();
         
-        // if(atBookingsPage) return filterBookingsFunc();
+        if(atBookingsPage) return filterBookingsFunc();
 
-        getLocationData("hospitals")
+        getLocationData("hospitals");
         
+        // Navigate to find page if onSearchSubmit is provided (for homepage)
+        if(onSearchSubmit) {
+            onSearchSubmit();
+        }
     }
 
     const getLocationData = async (dataType, location) => {
+        if(dataType == "states"){
+            try {
+                const states = await axios.get(`${api}/states`);
+                setAllStates(states.data);
+            } catch (error) {
+                console.error("Error fetching states:", error);
+                // Fallback to hardcoded states if API fails
+                const fallbackStates = [
+                    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", 
+                    "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", 
+                    "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", 
+                    "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", 
+                    "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal",
+                    "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", 
+                    "Lakshadweep", "Delhi", "Puducherry", "Ladakh", "Jammu and Kashmir"
+                ];
+                setAllStates(fallbackStates);
+            }
+        }
         if(dataType == "cities"){
             fetchingCities.current = true;
             const cities = await axios.get(`${api}/cities/${location}`);
@@ -95,9 +136,43 @@ const SearchBar = props => {
             setHospitalName(value);
         }
     }
+
+    const handleFocus = event => {
+        const {name} = event.target;
+        
+        if(name === "state" && allStates.length > 0) {
+            // Show all states when input is focused
+            if(stateName === "") {
+                setFilteredStates(allStates);
+            } else {
+                // Show filtered states if there's already text
+                filterStatesFunc();
+            }
+        }
+
+        if(name === "city" && allCities.length > 0) {
+            // Show all cities when input is focused
+            if(cityName === "") {
+                setFilteredCities(allCities);
+            } else {
+                // Show filtered cities if there's already text
+                filterCitiesFunc();
+            }
+        }
+
+        if(name === "hospitalName" && bookings.length > 0) {
+            // Show all hospitals when input is focused
+            if(hospitalName === "") {
+                setFilteredHospitals(bookings);
+            } else {
+                // Show filtered hospitals if there's already text
+                filterBookingsFunc();
+            }
+        }
+    }
     const filterStatesFunc = () => {
         
-        let foundStates = findLocations(allSates, stateName);
+        let foundStates = findLocations(allStates, stateName);
         setFilteredStates(foundStates);
     }
 
@@ -129,6 +204,11 @@ const SearchBar = props => {
         setCityName(nameOfCity)
     }
 
+    const clickHospitalSuggestions = (hospitalName) => {
+        setFilteredHospitals([]);
+        setHospitalName(hospitalName);
+    }
+
     const displayInputs = () => {
         if(atBookingsPage){
             return (
@@ -139,11 +219,12 @@ const SearchBar = props => {
                 value={hospitalName} 
                 name='hospitalName' 
                 onChange={handleChange}
+                onFocus={handleFocus}
                 placeholder='Search By Hospital'
                 id='hospitalName'
                 required
                 />
-                <SearchPop atBookingsPage={true} hospitals={filteredHospitals} clickFunction={clickStateSuggestions}/>
+                <SearchPop atBookingsPage={true} hospitals={filteredHospitals} clickFunction={clickHospitalSuggestions}/>
             </span>
         )
     }
@@ -156,6 +237,7 @@ const SearchBar = props => {
                 value={stateName} 
                 name='state' 
                 onChange={handleChange}
+                onFocus={handleFocus}
                 placeholder='state'
                 id='state'
                 required
@@ -170,9 +252,10 @@ const SearchBar = props => {
                 value={cityName} 
                 name='city' 
                 onChange={handleChange}
+                onFocus={handleFocus}
                 placeholder={fetchingCities.current ? "Fetching cities..." :'city'}
                 required
-                disabled={displayInputs ? false : true}
+                disabled={disableCityInput ? true : false}
                 />
                 <SearchPop locations={filteredCities} clickFunction={clickCitySuggetions}/>
             </span>

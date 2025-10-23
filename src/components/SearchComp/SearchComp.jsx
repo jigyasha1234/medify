@@ -10,9 +10,11 @@ import ambulance from "../../assets/ambulance.svg";
 //components
 import SearchBar from '../SearchBar/SearchBar';
 import Card from '../Card/Card';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SearchComp = () => {
+    const navigate = useNavigate();
+    
     //variables
     const cardsImages = [
         {image: doctorImage, text:"doctors"},
@@ -25,13 +27,14 @@ const SearchComp = () => {
     //functions
     const displayCards = () => cardsImages.map(item => <Card customStyle={item.customStyle} image={item.image} text={item.text} /> );
 
+    const handleSearchSubmit = () => {
+        navigate("/find");
+    };
 
     return (
         <div className='SearchComp'>
             <div className='commonContainer SearchCompBody'>
-                <Link to="/find">
-                    <SearchBar atHomePage={true}/>
-                </Link>
+                <SearchBar atHomePage={true} onSearchSubmit={handleSearchSubmit}/>
                 <div className='cardsDivWrapper'>
                     <p>You may be looking for</p>
                     <div className='cardsDiv'>
