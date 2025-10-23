@@ -212,7 +212,7 @@ const SearchBar = props => {
     const displayInputs = () => {
         if(atBookingsPage){
             return (
-            <span className='inputWrapper'>
+            <div className='inputWrapper'>
                 <img src={location}/>
                 <input 
                 type='text' 
@@ -225,12 +225,12 @@ const SearchBar = props => {
                 required
                 />
                 <SearchPop atBookingsPage={true} hospitals={filteredHospitals} clickFunction={clickHospitalSuggestions}/>
-            </span>
+            </div>
         )
     }
         return( 
             <>
-            <span className='inputWrapper'>
+            <div id="state" className='inputWrapper'>
                 <img src={location}/>
                 <input 
                 type='text' 
@@ -239,13 +239,12 @@ const SearchBar = props => {
                 onChange={handleChange}
                 onFocus={handleFocus}
                 placeholder='state'
-                id='state'
                 required
                 />
                 <SearchPop locations={filteredStates} clickFunction={clickStateSuggestions}/>
-            </span>
+            </div>
             
-            <span className={`inputWrapper ${disableCityInput}`}>
+            <div id="city" className={`inputWrapper ${disableCityInput}`}>
                 <img src={fetchingCities.current ? loadingIcon : location} className={fetchingCities.current ? 'rotateLoad' : null}/>
                 <input 
                 type='text' 
@@ -258,7 +257,7 @@ const SearchBar = props => {
                 disabled={disableCityInput ? true : false}
                 />
                 <SearchPop locations={filteredCities} clickFunction={clickCitySuggetions}/>
-            </span>
+            </div>
             </>
         )
     }

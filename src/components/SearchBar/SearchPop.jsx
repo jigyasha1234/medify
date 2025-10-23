@@ -1,4 +1,3 @@
-
 import React from 'react';
 //components
 import ResultCard from '../ResultCard/ResultCard';
@@ -12,11 +11,11 @@ const SearchPop = props => {
         if(atBookingsPage){
             if(!hospitals || !hospitals?.length) return null;
 
-            return hospitals.map(item => {
+            return hospitals.map((item, index) => {
                 const { hospitalName, county, city, rating, hospitalType } = item.data;
                 const { time, date } = item.dateTime;
                 return (
-                    <span className='SearchPopItem SearchPopItem-bookings'>
+                    <span key={index} onClick={() => clickFunction(hospitalName)} className='SearchPopItem SearchPopItem-bookings'>
                         <span>{hospitalName}</span>
                         <span className='resultContent-right resultContent-top'>
                             <Button text={time} buttonClass={`smallButton blueButton-outlined`}/>
@@ -29,7 +28,7 @@ const SearchPop = props => {
 
         if(!locations || !locations?.length) return null;
 
-        return locations.map(item => <span onClick={() =>  clickFunction(item)} className='SearchPopItem'>{item}</span>)
+        return locations.map((item, index) => <span key={index} onClick={() =>  clickFunction(item)} className='SearchPopItem'>{item}</span>)
     }
     return (
         <span className='SearchPop'>

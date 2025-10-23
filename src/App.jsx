@@ -31,6 +31,7 @@ function App() {
                 <Route path='/home' exact element={<HomePage />} />
                 <Route path='/find' exact element={<FindPage />} />
                 <Route path='/bookings' exact element={ <BookingsPage />} />
+                <Route path='/my-bookings' exact element={ <BookingsPage />} />
               </Routes>
             </BrowserRouter>
           </FoundHospitalsContext.Provider>
