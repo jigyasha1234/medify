@@ -22,10 +22,6 @@ const SearchResults = () => {
         if(foundHospitals?.hospitals?.length == 0) return null;
 
         return foundHospitals.hospitals.map(item => {
-            // console.log(item["Hospital Name"])
-            // console.log(item["County Name"])
-            // console.log(item["City"])
-            // console.log(item["Hospital overall rating"])
             return (
                 <ResultCard 
                     hospitalName={item["Hospital Name"]}

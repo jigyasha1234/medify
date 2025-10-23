@@ -15,25 +15,25 @@ const SearchPop = props => {
                 const { hospitalName, county, city, rating, hospitalType } = item.data;
                 const { time, date } = item.dateTime;
                 return (
-                    <span key={index} onClick={() => clickFunction(hospitalName)} className='SearchPopItem SearchPopItem-bookings'>
+                    <li key={index} onClick={() => clickFunction(hospitalName)} className='SearchPopItem SearchPopItem-bookings'>
                         <span>{hospitalName}</span>
                         <span className='resultContent-right resultContent-top'>
                             <Button text={time} buttonClass={`smallButton blueButton-outlined`}/>
                             <Button text={date} buttonClass={`smallButton greenButton-outlined`}/>
                         </span>
-                    </span>
-                )
+                    </li>
+                );
             });
         }
 
         if(!locations || !locations?.length) return null;
 
-        return locations.map((item, index) => <span key={index} onClick={() =>  clickFunction(item)} className='SearchPopItem'>{item}</span>)
+        return locations.map((item, index) => <li key={index} onClick={() =>  clickFunction(item)} className='SearchPopItem'>{item}</li>)
     }
     return (
-        <span className='SearchPop'>
+        <ul className='SearchPop'>
             {displayStates()}    
-        </span>
+        </ul>
     );
 };
 

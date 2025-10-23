@@ -45,6 +45,9 @@
     max-height: 500px;
     box-shadow: 6px 6px 35px 0px #1028511C;
     overflow: auto;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .SearchPopItem{
