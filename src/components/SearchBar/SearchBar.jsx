@@ -255,7 +255,7 @@ const SearchBar = props => {
     return (
       <>
         {/* STATE FIELD */}
-        <div  className="inputWrapper" onClick={() => handleDivClick("state")}>
+        <div  className="inputWrapper" onClick={() => handleDivClick("state")} id="state">
           <img src={location} />
           <input
             type="text"
@@ -267,7 +267,7 @@ const SearchBar = props => {
             required
           />
           {filteredStates?.length > 0 && (
-            <div className="dropdown" id="state">
+            <div className="dropdown" >
               {filteredStates.map((item, index) => (
                 <li key={index} onClick={() => clickStateSuggestions(item)}>
                   {item}
@@ -278,7 +278,7 @@ const SearchBar = props => {
         </div>
 
         {/* CITY FIELD */}
-        <div className={`inputWrapper ${disableCityInput}`} onClick={() => handleDivClick("city")}>
+        <div id="city" className={`inputWrapper ${disableCityInput}`} onClick={() => handleDivClick("city")}>
           <img
             src={fetchingCities.current ? loadingIcon : location}
             className={fetchingCities.current ? "rotateLoad" : null}
@@ -294,7 +294,7 @@ const SearchBar = props => {
             disabled={disableCityInput ? true : false}
           />
           {filteredCities?.length > 0 && (
-            <div className="dropdown" id="city">
+            <div className="dropdown" >
               {filteredCities.map((item, index) => (
                 <li key={index} onClick={() => clickCitySuggetions(item)}>
                   {item}
