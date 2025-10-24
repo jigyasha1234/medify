@@ -66,7 +66,6 @@ const ResultCard = props => {
         )
     }
     const slotClick = (date, time) => {
-        console.log({date, time})
         setDateTime({time, date});
     }
     return (
