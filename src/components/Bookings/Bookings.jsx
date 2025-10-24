@@ -52,7 +52,6 @@ const Bookings = () => {
                 </div>
                 <div className='cardAndSensodyne'>
                     <aside className='resultCardsArray'>
-                        {/* <ResultCard /> */}
                         {displayCards()}
                     </aside>
                     <aside className='sensodyne'></aside>
