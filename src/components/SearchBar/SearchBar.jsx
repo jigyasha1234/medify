@@ -210,57 +210,84 @@ const SearchBar = props => {
     }
 
     const displayInputs = () => {
-        if(atBookingsPage){
-            return (
-            <div className='inputWrapper'>
-                <img src={location}/>
-                <input 
-                type='text' 
-                value={hospitalName} 
-                name='hospitalName' 
-                onChange={handleChange}
-                onFocus={handleFocus}
-                placeholder='Search By Hospital'
-                id='hospitalName'
-                required
-                />
-                <SearchPop atBookingsPage={true} hospitals={filteredHospitals} clickFunction={clickHospitalSuggestions}/>
-            </div>
-        )
-    }
-        return( 
-            <>
-            <div id="state" className='inputWrapper'>
-                <img src={location}/>
-                <input 
-                type='text' 
-                value={stateName} 
-                name='state' 
-                onChange={handleChange}
-                onFocus={handleFocus}
-                placeholder='state'
-                required
-                />
-                <SearchPop locations={filteredStates} clickFunction={clickStateSuggestions}/>
-            </div>
-            
-            <div id="city" className={`inputWrapper ${disableCityInput}`}>
-                <img src={fetchingCities.current ? loadingIcon : location} className={fetchingCities.current ? 'rotateLoad' : null}/>
-                <input 
-                type='text' 
-                value={cityName} 
-                name='city' 
-                onChange={handleChange}
-                onFocus={handleFocus}
-                placeholder={fetchingCities.current ? "Fetching cities..." :'city'}
-                required
-                disabled={disableCityInput ? true : false}
-                />
-                <SearchPop locations={filteredCities} clickFunction={clickCitySuggetions}/>
-            </div>
-            </>
-        )
-    }
+  if (atBookingsPage) {
+    return (
+      <div className='inputWrapper'>
+        <img src={location} />
+        <input
+          type='text'
+          value={hospitalName}
+          name='hospitalName'
+          onChange={handleChange}
+          onFocus={handleFocus}
+          placeholder='Search By Hospital'
+          id='hospitalName'
+          required
+        />
+        <SearchPop
+          atBookingsPage={true}
+          hospitals={filteredHospitals}
+          clickFunction={clickHospitalSuggestions}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {/* STATE FIELD */}
+      <div id="state" className="inputWrapper">
+        <img src={location} />
+        <input
+          type="text"
+          value={stateName}
+          name="state"
+          onChange={handleChange}
+          onFocus={handleFocus}
+          placeholder="state"
+          required
+        />
+        {filteredStates?.length > 0 && (
+          <div className="dropdown">
+            {filteredStates.map((item, index) => (
+              <li key={index} onClick={() => clickStateSuggestions(item)}>
+                {item}
+              </li>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* CITY FIELD */}
+      <div id="city" className={`inputWrapper ${disableCityInput}`}>
+        <img
+          src={fetchingCities.current ? loadingIcon : location}
+          className={fetchingCities.current ? "rotateLoad" : null}
+        />
+        <input
+          type="text"
+          value={cityName}
+          name="city"
+          onChange={handleChange}
+          onFocus={handleFocus}
+          placeholder={fetchingCities.current ? "Fetching cities..." : "city"}
+          required
+          disabled={disableCityInput ? true : false}
+        />
+        {filteredCities?.length > 0 && (
+          <div className="dropdown">
+            {filteredCities.map((item, index) => (
+              <li key={index} onClick={() => clickCitySuggetions(item)}>
+                {item}
+              </li>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
 
     return (
         <form onSubmit={handleSubmit} className={`SearchBar ${customClass}`}>
