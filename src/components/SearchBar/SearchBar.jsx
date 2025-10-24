@@ -218,10 +218,7 @@ const SearchBar = props => {
   }
  const handleDivClick = (fieldType) => {
       if (fieldType === "state") {
-        if (allStates.length === 0) {
-          showStatesOnLoad.current = true;
-          getLocationData("states");
-        }else{
+        {
           setFilteredStates(allStates);
         }
       }
@@ -255,7 +252,7 @@ const SearchBar = props => {
     return (
       <>
         {/* STATE FIELD */}
-        <div  className="inputWrapper" onClick={() => handleDivClick("state")} id="state">
+        <div  className="inputWrapper" onClick={() => handleDivClick("state")} id="state" onFocus={()=>{handleFocus()}}>
           <img src={location} />
           <input
             type="text"
