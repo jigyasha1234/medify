@@ -77,10 +77,10 @@ const ResultCard = props => {
                 </div>
                 <div className='resultCardContent'>
                     <div className='resultContent-left'>
-                        <h6 className='resultCardTitle'>{hospitalName}</h6>
+                        <h6 className='resultCardTitle'>{hospitalName || "Unknown Hospital"}</h6>
                         <div className='resultLocation'>
-                            <span className='resultCity'>{`${county}, ${city}`}</span>
-                            <span className='resultCardSubtext'>{hospitalType}</span>
+                            <span className='resultCity'>{`${county || "Unknown County"}, ${city || "Unknown City"}`}</span>
+                            <span className='resultCardSubtext'>{hospitalType || "Unknown Type"}</span>
                             <span className='resultCardSubtext'>more</span>
                         </div>
                         <div className='resultCardOfferLine'>

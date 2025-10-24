@@ -61,7 +61,9 @@ const Bookings = () => {
                 </div>
                 <div className='cardAndSensodyne'>
                     <aside className='resultCardsArray'>
-                        {displayCards()}
+                        <ul>
+                            {displayCards()}
+                        </ul>
                     </aside>
                     <aside className='sensodyne'></aside>
                 </div>

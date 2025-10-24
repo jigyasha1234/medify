@@ -23,14 +23,15 @@ const SearchResults = () => {
 
         return foundHospitals.hospitals.map((item, index) => {
             return (
+                <li key={index}>
                 <ResultCard 
-                    key={index}
                     hospitalName={item["Hospital Name"]}
                     county={item["County Name"]}
                     city={item["City"]}
                     rating={item["Hospital overall rating"]}
                     hospitalType={item["Hospital Type"]}
                 />
+                </li>
             )
         });
     }
@@ -46,8 +47,9 @@ const SearchResults = () => {
                 </div>
                 <div className='cardAndSensodyne'>
                     <aside className='resultCardsArray'>
-                        {/* <ResultCard /> */}
-                        {displayCards()}
+                        <ul>
+                            {displayCards()}
+                        </ul>
                     </aside>
                     <aside className='sensodyne'></aside>
                 </div>
