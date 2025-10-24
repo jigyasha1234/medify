@@ -252,7 +252,7 @@ const SearchBar = props => {
     return (
       <>
         {/* STATE FIELD */}
-        <div  className="inputWrapper" onClick={() => handleDivClick("state")} id="state" onFocus={()=>{handleFocus()}}>
+        <div  className="inputWrapper" onClick={() => handleDivClick("state")} id="state">
           <img src={location} />
           <input
             type="text"
