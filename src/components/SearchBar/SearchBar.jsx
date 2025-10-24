@@ -233,10 +233,20 @@ const SearchBar = props => {
     );
   }
 
+  const handleDivClick = (fieldType) => {
+    // Prevent form submission when clicking inside the div
+    if(fieldType === "state" && allStates.length > 0) {
+      setFilteredStates(allStates);
+    }
+    if(fieldType === "city" && allCities.length > 0) {
+      setFilteredCities(allCities);
+    }
+  }
+
   return (
     <>
       {/* STATE FIELD */}
-      <div id="state" className="inputWrapper">
+      <div id="state" className="inputWrapper" onClick={() => handleDivClick("state")}>
         <img src={location} />
         <input
           type="text"
@@ -259,7 +269,7 @@ const SearchBar = props => {
       </div>
 
       {/* CITY FIELD */}
-      <div id="city" className={`inputWrapper ${disableCityInput}`}>
+      <div id="city" className={`inputWrapper ${disableCityInput}`} onClick={() => handleDivClick("city")}>
         <img
           src={fetchingCities.current ? loadingIcon : location}
           className={fetchingCities.current ? "rotateLoad" : null}
@@ -295,7 +305,7 @@ const SearchBar = props => {
 
             <Button 
             formSubmit="true" 
-            text={fetchingHospitals ? "Fetching..." : "search" }
+            text={fetchingHospitals ? "Fetching..." : "Search" }
             icon={fetchingHospitals ? loadingIcon : searchIcon} 
             buttonClass={"longButton"}
             rotateIcon={fetchingHospitals ? true : false}
