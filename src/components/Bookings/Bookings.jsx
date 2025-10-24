@@ -15,21 +15,29 @@ const Bookings = () => {
         if(bookings?.length == 0) return null;
 
         return bookings.map((item, index) => {
+            if(!item || !item.data || !item.date) {
+                console.warn("Invalid booking item:", item);
+                return null;
+            }
             const { hospitalName, county, city, rating, hospitalType } = item.data;
+            if(!hospitalName) {
+                console.warn("Missing hospital name in booking:", item);
+                return null;
+            }
             return (
                 <ResultCard 
                     key={index}
                     hospitalName={hospitalName}
-                    county={county}
-                    city={city}
-                    rating={rating}
-                    hospitalType={hospitalType}
+                    county={county || "Unknown"}
+                    city={city || "Unknown"}
+                    rating={rating || "N/A"}
+                    hospitalType={hospitalType || "General"}
                     atBookingsPage={true}
                     bookedDate={item.dateTime.date}
                     bookedTime={item.dateTime.time}
                 />
             )
-        });
+        }).filter(Boolean);
     }
 
     //get bookings from local
