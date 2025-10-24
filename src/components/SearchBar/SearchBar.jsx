@@ -91,7 +91,7 @@ const SearchBar = props => {
                 console.error("Error fetching states:", error);
                 // Fallback to hardcoded states if API fails
                 const fallbackStates = [
-                    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", 
+                    "Alabama","Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", 
                     "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", 
                     "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", 
                     "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", 
@@ -299,6 +299,7 @@ const SearchBar = props => {
             icon={fetchingHospitals ? loadingIcon : searchIcon} 
             buttonClass={"longButton"}
             rotateIcon={fetchingHospitals ? true : false}
+            id="searchBtn"
             />
         </form>
     );

@@ -41,7 +41,7 @@ const TabPanel = props => {
       >
         {value === index && (
           <>
-            <SlotSession dateTime={dateTime} slotDate={slotDate} slotClick={slotClick} type="Morining" timings = {morningTimings} suffix="AM"/>
+            <SlotSession dateTime={dateTime} slotDate={slotDate} slotClick={slotClick} type="Morning" timings = {morningTimings} suffix="AM"/>
             <span className='slotDivider'></span>
             <SlotSession dateTime={dateTime} slotDate={slotDate} slotClick={slotClick} type="Afternoon" timings = {afternoonTimings} suffix="PM"/>
             <span className='slotDivider'></span>

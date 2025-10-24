@@ -14,10 +14,11 @@ const Bookings = () => {
     const displayCards = () => {
         if(bookings?.length == 0) return null;
 
-        return bookings.map(item => {
+        return bookings.map((item, index) => {
             const { hospitalName, county, city, rating, hospitalType } = item.data;
             return (
                 <ResultCard 
+                    key={index}
                     hospitalName={hospitalName}
                     county={county}
                     city={city}
@@ -44,7 +45,7 @@ const Bookings = () => {
         <div className='SearchResults' >
             <div className='commonContainer resultsBody'>
                 <div className='resultsHead'>
-                    <h5></h5>
+                    <h1>My Bookings</h1>
                     <p>
                         {/* <img src={checkIcon} alt='check icon' className='checkIcon'/>
                         <span>{subText}</span> */}

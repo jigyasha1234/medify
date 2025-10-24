@@ -2,12 +2,13 @@ import React from 'react';
 //styles
 import "./Button.css";
 
-const Button = ({text, buttonClass, icon, clickFuntion, formSubmit, rotateIcon}) => {
+const Button = ({text, buttonClass, icon, clickFuntion, formSubmit, rotateIcon, id}) => {
     return (
         <button 
             className={`Button ${buttonClass}`} 
             onClick={clickFuntion}
             type={formSubmit ? "submit" : null}
+            id={id}
         >
             {icon ? <img src={icon} className={rotateIcon ? 'buttonIcon rotateLoad' : 'buttonIcon'} /> : null}
             {text ? <span>{text}</span> : null}

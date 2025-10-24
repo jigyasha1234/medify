@@ -21,9 +21,10 @@ const SearchResults = () => {
         if(!foundHospitals) return null;
         if(foundHospitals?.hospitals?.length == 0) return null;
 
-        return foundHospitals.hospitals.map(item => {
+        return foundHospitals.hospitals.map((item, index) => {
             return (
                 <ResultCard 
+                    key={index}
                     hospitalName={item["Hospital Name"]}
                     county={item["County Name"]}
                     city={item["City"]}
@@ -37,7 +38,7 @@ const SearchResults = () => {
         <div className='SearchResults' >
             <div className='commonContainer resultsBody'>
                 <div className='resultsHead'>
-                    <h1>{foundHospitals.noSearchYet ? headline0 : `${foundHospitals?.hospitals?.length} medical centers available in ${foundHospitals?.stateName}`}</h1>
+                    <h1>{foundHospitals.noSearchYet ? headline0 : `${foundHospitals?.hospitals?.length} medical centers available in ${foundHospitals?.cityName?.toLowerCase()}`}</h1>
                     <p>
                         <img src={checkIcon} alt='check icon' className='checkIcon'/>
                         <span>{subText}</span>
