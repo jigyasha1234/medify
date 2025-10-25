@@ -165,18 +165,20 @@ const SearchBar = (props) => {
     setFilteredHospitals(findBookings(bookings, hospitalName));
   };
 
-  const clickStateSuggestions = async (nameOfState) => {
-    setFilteredStates([]);
-    stateName_onChange.current = false;
-    setStateName(nameOfState);
-    await getLocationData("cities", nameOfState);
-  };
+ const clickStateSuggestions = (nameOfState) => {
+  setStateName(nameOfState);      // Set the state
+  setFilteredStates([]);          // Hide the dropdown immediately
+  stateName_onChange.current = false;
 
-  const clickCitySuggetions = (nameOfCity) => {
-    setFilteredCities([]);
-    cityName_onChange.current = false;
-    setCityName(nameOfCity);
-  };
+  getLocationData("cities", nameOfState); // Fetch cities for selected state
+};
+
+const clickCitySuggetions = (nameOfCity) => {
+  setCityName(nameOfCity);       // Set the city
+  setFilteredCities([]);         // Hide the dropdown immediately
+  cityName_onChange.current = false;
+};
+
 
   const clickHospitalSuggestions = (hospitalName) => {
     setFilteredHospitals([]);
@@ -184,10 +186,21 @@ const SearchBar = (props) => {
   };
 
   const handleDivClick = (fieldType) => {
-    if (fieldType === "state") setFilteredStates(allStates);
-    if (fieldType === "city" && allCities.length > 0 && !disableCityInput)
+  if (fieldType === "state") {
+    // Only show dropdown if it’s currently empty
+    if (filteredStates.length === 0 && allStates.length > 0) {
+      setFilteredStates(allStates);
+    }
+  }
+
+  if (fieldType === "city" && allCities.length > 0 && !disableCityInput) {
+    // Only show dropdown if it’s currently empty
+    if (filteredCities.length === 0) {
       setFilteredCities(allCities);
-  };
+    }
+  }
+};
+
 
  const displayInputs = () => {
   if (atBookingsPage) {
