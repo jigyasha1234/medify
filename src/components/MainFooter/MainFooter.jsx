@@ -21,9 +21,9 @@ const MainFooter = () => {
 
     //functions
     const displayLinks = () => {
-        return links.map(item => {
+        return links.map((item, index) => {
             return (
-                <a className='footerLink' href='#'>
+                <a className='footerLink' href='#' key={index}>
                     <img src={rightArrowImg} alt='right arrow'/>
                     <span>{item}</span>
                 </a>
