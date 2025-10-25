@@ -189,94 +189,95 @@ const SearchBar = (props) => {
       setFilteredCities(allCities);
   };
 
-  const displayInputs = () => {
-    if (atBookingsPage) {
-      return (
-        <div className="inputWrapper">
-          <img src={location} />
-          <input
-            type="text"
-            value={hospitalName}
-            name="hospitalName"
-            onChange={handleChange}
-            onFocus={handleFocus}
-            placeholder="Search By Hospital"
-            id="hospitalName"
-            required
-          />
-          <SearchPop
-            atBookingsPage={true}
-            hospitals={filteredHospitals}
-            clickFunction={clickHospitalSuggestions}
-          />
-        </div>
-      );
-    }
-
+ const displayInputs = () => {
+  if (atBookingsPage) {
     return (
-      <>
-        {/* STATE FIELD */}
-        <div
-          className="inputWrapper"
-          onClick={() => handleDivClick("state")}
-          id="state"
-        >
-          <img src={location} />
-          <input
-            type="text"
-            value={stateName}
-            name="state"
-            onChange={handleChange}
-            onFocus={handleFocus}
-            placeholder="state"
-            required
-          />
-          {filteredStates?.length > 0 && (
-            <div className="dropdown" style={{ zIndex: 9 }}>
-              {filteredStates.map((item, index) => (
-                <li key={index} onClick={() => clickStateSuggestions(item)}>
-                  {item}
-                </li>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* CITY FIELD */}
-        <div
-          className={`inputWrapper ${disableCityInput}`}
-          onClick={() => handleDivClick("city")}
-          id="city"
-        >
-          <img
-            src={fetchingCities.current ? loadingIcon : location}
-            className={fetchingCities.current ? "rotateLoad" : null}
-          />
-          <input
-            type="text"
-            value={cityName}
-            name="city"
-            onChange={handleChange}
-            onFocus={handleFocus}
-            placeholder={
-              fetchingCities.current ? "Fetching cities..." : "city"
-            }
-            required
-            disabled={!!disableCityInput}
-          />
-          {filteredCities?.length > 0 && (
-            <div className="dropdown" style={{ zIndex: 9 }}>
-              {filteredCities.map((item, index) => (
-                <li key={index} onClick={() => clickCitySuggetions(item)}>
-                  {item}
-                </li>
-              ))}
-            </div>
-          )}
-        </div>
-      </>
+      <div className='inputWrapper'>
+        <img src={location} />
+        <input
+          type='text'
+          value={hospitalName}
+          name='hospitalName'
+          onChange={handleChange}
+          onFocus={handleFocus}
+          placeholder='Search By Hospital'
+          id='hospitalName'
+          required
+        />
+        <SearchPop
+          atBookingsPage={true}
+          hospitals={filteredHospitals}
+          clickFunction={clickHospitalSuggestions}
+        />
+      </div>
     );
-  };
+  }
+
+  return (
+    <>
+      {/* STATE FIELD */}
+      <div
+        className="inputWrapper"
+        onClick={() => handleDivClick("state")}
+        id="state"
+      >
+        <img src={location} />
+        <input
+          type="text"
+          value={stateName}
+          name="state"
+          onChange={handleChange}
+          onFocus={handleFocus}
+          placeholder="state"
+          required
+        />
+        {/* li directly inside div#state */}
+        {filteredStates?.length > 0 && (
+          <ul className="dropdownList">
+            {filteredStates.map((item, index) => (
+              <li key={index} onClick={() => clickStateSuggestions(item)}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {/* CITY FIELD */}
+      <div
+        className={`inputWrapper ${disableCityInput}`}
+        onClick={() => handleDivClick("city")}
+        id="city"
+      >
+        <img
+          src={fetchingCities.current ? loadingIcon : location}
+          className={fetchingCities.current ? "rotateLoad" : null}
+        />
+        <input
+          type="text"
+          value={cityName}
+          name="city"
+          onChange={handleChange}
+          onFocus={handleFocus}
+          placeholder={fetchingCities.current ? "Fetching cities..." : "city"}
+          required
+          disabled={disableCityInput ? true : false}
+        />
+        {/* li directly inside div#city */}
+        {filteredCities?.length > 0 && (
+          <ul className="dropdownList">
+            {filteredCities.map((item, index) => (
+              <li key={index} onClick={() => clickCitySuggetions(item)}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </>
+  );
+};
+
 
   return (
     <form onSubmit={handleSubmit} className={`SearchBar ${customClass}`}>
