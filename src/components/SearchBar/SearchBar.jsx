@@ -76,54 +76,63 @@ const SearchBar = props => {
     }
   }, [allStates])
 
-  //functions
-  const handleSubmit = async event => {
-    event.preventDefault();
+  const handleSubmit = async (event) => {
+  event.preventDefault();
 
-    if (atBookingsPage) return filterBookingsFunc();
+  if (atBookingsPage) return filterBookingsFunc();
 
-    getLocationData("hospitals");
-
-    // Navigate to find page if onSearchSubmit is provided (for homepage)
-    if (onSearchSubmit) {
-      onSearchSubmit();
-    }
+  // Only fetch hospitals if both are selected
+  if (!stateName || !cityName) {
+    console.warn("Please select both state and city before searching");
+    return;
   }
 
-  const getLocationData = async (dataType, location) => {
-    if (dataType == "states") {
-      try {
-        const states = await axios.get(`${api}/states`);
-        setAllStates(states.data);
-      } catch (error) {
-        console.error("Error fetching states:", error);
-        // Fallback to hardcoded states if API fails
-        const fallbackStates = [
-          "Alabama", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
-          "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
-          "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram",
-          "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
-          "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal",
-          "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu",
-          "Lakshadweep", "Delhi", "Puducherry", "Ladakh", "Jammu and Kashmir"
-        ];
-        setAllStates(fallbackStates);
-      }
-    }
-    if (dataType == "cities") {
+  await getLocationData("hospitals");
+
+  if (onSearchSubmit) {
+    onSearchSubmit();
+  }
+};
+
+const getLocationData = async (dataType, location) => {
+  try {
+    if (dataType === "states") {
+      const states = await axios.get(`${api}/states`);
+      setAllStates(states.data);
+    } 
+    else if (dataType === "cities") {
       fetchingCities.current = true;
       const cities = await axios.get(`${api}/cities/${location}`);
       setAllCities(cities.data);
       fetchingCities.current = false;
       setDisableCityInput(undefined);
-    }
-    if (dataType === "hospitals") {
+    } 
+    else if (dataType === "hospitals") {
       setFetchingHospitals(true);
-      const hospitals = await axios.get(`${api}/data?state=${stateName}&city=${cityName}`);
-      setFoundHospitals({ hospitals: hospitals.data, cityName, stateName });
+
+      // Make sure we use trimmed values
+      const state = stateName.trim();
+      const city = cityName.trim();
+
+      const response = await axios.get(
+        `${api}/data?state=${encodeURIComponent(state)}&city=${encodeURIComponent(city)}`
+      );
+
+      setFoundHospitals({
+        hospitals: response.data,
+        cityName: city,
+        stateName: state,
+      });
+
       setFetchingHospitals(false);
     }
+  } catch (error) {
+    console.error(`Error fetching ${dataType}:`, error);
+    setFetchingHospitals(false);
   }
+};
+
+
   const handleChange = event => {
     const { value, name } = event.target;
 
