@@ -273,7 +273,7 @@ const getLocationData = async (dataType, location) => {
             required
           />
           {filteredStates?.length > 0 && (
-            <div className="dropdown" style={{zIndex: 10}} id="state">
+            <div className="dropdown" style={{zIndex: 9}} >
               {filteredStates.map((item, index) => (
                 <li key={index} onClick={() => clickStateSuggestions(item)}>
                   {item}
@@ -300,7 +300,7 @@ const getLocationData = async (dataType, location) => {
             disabled={disableCityInput ? true : false}
           />
           {filteredCities?.length > 0 && (
-            <div className="dropdown" id="city" style={{zIndex: 9}}>
+            <div className="dropdown"  style={{zIndex: 9}}>
               {filteredCities.map((item, index) => (
                 <li key={index} onClick={() => clickCitySuggetions(item)}>
                   {item}
