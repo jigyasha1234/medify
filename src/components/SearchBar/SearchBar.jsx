@@ -273,7 +273,7 @@ const getLocationData = async (dataType, location) => {
             required
           />
           {filteredStates?.length > 0 && (
-            <div className="dropdown" >
+            <div className="dropdown" style={{zIndex: 10}} >
               {filteredStates.map((item, index) => (
                 <li key={index} onClick={() => clickStateSuggestions(item)}>
                   {item}

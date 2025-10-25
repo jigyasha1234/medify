@@ -28,7 +28,7 @@ const Specialization = () => {
         {text: "X-Ray", image: xrayImage},
     ];
     //functions
-    const displayCards = () => data.map(item => <Card cardClass="specializationCard" image={item.image} text={item.text} /> );
+    const displayCards = () => data.map((item, index) => <Card key={index} cardClass="specializationCard" image={item.image} text={item.text} /> );
     return (
         <div className='Specialization'>
             <div className='commonContainer SpecializationBody'>

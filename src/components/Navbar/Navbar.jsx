@@ -18,11 +18,11 @@ const Navbar = props => {
     const navLinks = ["Find Doctors", "Hospitals", "Medicines", "Surgeries", "Software for Provider", "Facilities"];
     //functions
     const displayLinks = () => {
-        return navLinks.map(item => {
+        return navLinks.map((item, index) => {
             let goto = "#"
             if(item == "Find Doctors") goto = "/find"
             return (
-                <Link to={goto}>
+                <Link to={goto} key={index}>
                     <span className='navLink'><span className='navLink-inner'>{item}</span></span>
                 </Link>
             )
@@ -40,13 +40,13 @@ const Navbar = props => {
             let goto = "#";
             if(item == "Find Doctors") goto = "/find";
             return arr.push(
-                <Link onClick={handleMenuClick} to={goto} style={transitionDelay} className={`menuItem ${menuPoisition}`}>
+                <Link key={index} onClick={handleMenuClick} to={goto} style={transitionDelay} className={`menuItem ${menuPoisition}`}>
                     {item}
                 </Link>
             )
         });
 
-        arr.push(<Link to="/bookings" style={transitionDelay} className={`menuItem ${menuPoisition} menuItem-forBookings`}><Button text="my bookings" buttonClass="largeButton "/></Link>);
+        arr.push(<Link to="/bookings" key="bookings" style={transitionDelay} className={`menuItem ${menuPoisition} menuItem-forBookings`}><Button text="my bookings" buttonClass="largeButton "/></Link>);
 
         return arr;
     } 

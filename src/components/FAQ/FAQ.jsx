@@ -21,9 +21,9 @@ const FAQ = () => {
     const faqData = [ text1, text2, text3, text4 ];
     //functions
     const displyFaqs = () => {
-        return faqData.map(item => {
+        return faqData.map((item, index) => {
             return (
-                <div className='faqQuestion'>
+                <div className='faqQuestion' key={index}>
                     <span className=''>{item}</span>
                     <img src={plus} alt='plus icon' />
                 </div>

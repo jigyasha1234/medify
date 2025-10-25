@@ -25,7 +25,7 @@ const SearchComp = () => {
         
     ]
     //functions
-    const displayCards = () => cardsImages.map(item => <Card customStyle={item.customStyle} image={item.image} text={item.text} /> );
+    const displayCards = () => cardsImages.map((item, index) => <Card key={index} customStyle={item.customStyle} image={item.image} text={item.text} /> );
 
     const handleSearchSubmit = () => {
         navigate("/find");
