@@ -261,7 +261,7 @@ const getLocationData = async (dataType, location) => {
     return (
       <>
         {/* STATE FIELD */}
-        <div  className="inputWrapper" onClick={() => handleDivClick("state")} >
+        <div  className="inputWrapper" onClick={() => handleDivClick("state")} id="state">
           <img src={location} />
           <input
             type="text"
@@ -284,7 +284,7 @@ const getLocationData = async (dataType, location) => {
         </div>
 
         {/* CITY FIELD */}
-        <div className={`inputWrapper ${disableCityInput}`} onClick={() => handleDivClick("city")}>
+        <div className={`inputWrapper ${disableCityInput}`} onClick={() => handleDivClick("city")} id="city">
           <img
             src={fetchingCities.current ? loadingIcon : location}
             className={fetchingCities.current ? "rotateLoad" : null}
