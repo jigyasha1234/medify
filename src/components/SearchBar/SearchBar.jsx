@@ -261,7 +261,7 @@ const getLocationData = async (dataType, location) => {
     return (
       <>
         {/* STATE FIELD */}
-        <div  className="inputWrapper" onClick={() => handleDivClick("state")} id="state">
+        <div  className="inputWrapper" onClick={() => handleDivClick("state")} >
           <img src={location} />
           <input
             type="text"
@@ -273,7 +273,7 @@ const getLocationData = async (dataType, location) => {
             required
           />
           {filteredStates?.length > 0 && (
-            <div className="dropdown" style={{zIndex: 10}} >
+            <div className="dropdown" style={{zIndex: 10}} id="state">
               {filteredStates.map((item, index) => (
                 <li key={index} onClick={() => clickStateSuggestions(item)}>
                   {item}
@@ -284,7 +284,7 @@ const getLocationData = async (dataType, location) => {
         </div>
 
         {/* CITY FIELD */}
-        <div id="city" className={`inputWrapper ${disableCityInput}`} onClick={() => handleDivClick("city")}>
+        <div className={`inputWrapper ${disableCityInput}`} onClick={() => handleDivClick("city")}>
           <img
             src={fetchingCities.current ? loadingIcon : location}
             className={fetchingCities.current ? "rotateLoad" : null}
@@ -300,7 +300,7 @@ const getLocationData = async (dataType, location) => {
             disabled={disableCityInput ? true : false}
           />
           {filteredCities?.length > 0 && (
-            <div className="dropdown" >
+            <div className="dropdown" id="city" style={{zIndex: 9}}>
               {filteredCities.map((item, index) => (
                 <li key={index} onClick={() => clickCitySuggetions(item)}>
                   {item}
